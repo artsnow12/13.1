@@ -1,7 +1,7 @@
 const forms = [
     {
         obj: document.querySelector("#name"),
-        pattern: /^[A-ZА-Я][a-zа-я'-]{1,49}$/
+        pattern: /^[A-ZА-ЯІЇЄҐ][a-zа-яіїєґ'-]{1,49}$/u
     },
     {
         obj: document.querySelector("#message"),
@@ -19,28 +19,29 @@ const forms = [
 
 const form = document.querySelector("#contact-form");
 
-form.addEventListener("submit", (e) => {
-    e.preventDefault();
+form.addEventListener("submit", (event) => {
+    event.preventDefault();
 
-    const spans = document.querySelectorAll('span');
-    spans.forEach(span => span.classList.add('hidden'));
+    const spans = document.querySelectorAll("span");
+    spans.forEach(span => span.classList.add("hidden"));
 
     let isValid = true;
+
     forms.forEach(({ obj, pattern }) => {
-        if (!validate(obj, pattern)) {
-            obj.nextElementSibling.classList.remove('hidden');
+        if (!pattern.test(obj.value.trim())) {
+            obj.nextElementSibling.classList.remove("hidden");
             isValid = false;
         }
     });
 
     if (isValid) {
         const data = {
-            name: forms[0].obj.value,
-            message: forms[1].obj.value,
-            phone: forms[2].obj.value,
-            email: forms[3].obj.value
+            name: document.querySelector("#name").value.trim(),
+            message: document.querySelector("#message").value.trim(),
+            phone: document.querySelector("#tel").value.trim(),
+            email: document.querySelector("#email").value.trim()
         };
-        console.log("Form data submitted:", data);
+        console.log("Form submitted successfully:", data);
     }
 });
 
