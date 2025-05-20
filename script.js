@@ -46,5 +46,5 @@ form.addEventListener("submit", (event) => {
 });
 
 function validate(obj, pattern) {
-    return pattern.test(obj.value);
+    return pattern.test(obj.value.trim());
 }
